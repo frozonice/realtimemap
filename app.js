@@ -7,7 +7,7 @@ var express = require('express')
   , md5 = require('MD5')
   , SendGrid = require('sendgrid').SendGrid
   , count = 0
-  , target = 1;
+  , target = 20;
 
 
 // Define the Pusher stuff
