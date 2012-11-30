@@ -11,12 +11,10 @@ body {
 }
 
 h1 {
-	background: url('/images/sendgrid-logo.png') 0 -5px transparent;
+	background: url('/images/sendgrid-logo.png') 0 -3px transparent;
 	background-repeat: no-repeat;
 	font: 32px "Helvetica", Arial, sans-serif;
-	padding-left: 110px;
-	height: 60px;
-	padding-top: 30px;
+	padding: 5px 0 5px 55px;
 }
 
 #map {
