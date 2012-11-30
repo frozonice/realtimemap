@@ -4,7 +4,10 @@ var express = require('express')
   , Pusher = require('node-pusher')
   , request = require('request')
   , util = require('util')
-  , md5 = require('MD5');
+  , md5 = require('MD5')
+  , SendGrid = require('sendgrid').SendGrid
+  , count = 0
+  , target = 1;
 
 
 // Define the Pusher stuff
@@ -16,6 +19,9 @@ var pusher = new Pusher({
 
 var channel = 'map';
 
+// Define the SendGrid stuff
+
+var sendgrid = new SendGrid('martyndavies', 'md9482');
 
 // Define the app stuff
 var app = express();
@@ -35,6 +41,19 @@ app.configure('development', function(){
   app.use(express.errorHandler());
 });
 
+function emailWinner(emailAddress, name){
+
+  sendgrid.send({
+    to: emailAddress,
+    from: 'community@sendgrid.com',
+    subject: 'You are the winner!',
+    text: 'Hey '+name+', you were the 20th email received! Congrats, see Martyn for your prize.'
+  }, function(success, message) {
+      if (!success) {
+      console.log(message);
+    }
+  });
+};
 
 // Geocoder function
 function geocodeCity(cityName, callback) {
@@ -64,7 +83,7 @@ app.get('/', function(req, res){
 
 // Receive events
 app.post('/receiver', function(req, res){
-
+  count++;
   // Hash the email address
   var email_address = req.body.from.replace(/</g,'').replace(/>/g,'').split(' ');
   var sender_name = email_address[0]+" "+email_address[1];
@@ -88,7 +107,11 @@ app.post('/receiver', function(req, res){
       } else {
         console.log("Sending "+ data.email +" at location "+ data.lat+","+data.lng);
       }
-    });  
+    });
+
+    if (count === target) {
+      emailWinner(email_address[2], sender_name);
+    }  
   });
 
   res.send(200);
