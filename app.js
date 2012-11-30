@@ -35,6 +35,8 @@ app.configure('development', function(){
   app.use(express.errorHandler());
 });
 
+
+// Geocoder function
 function geocodeCity(cityName, callback) {
   var map_url = "http://maps.googleapis.com/maps/api/geocode/json?address="+cityName+"&sensor=false";
   var whenReqComplete = function(error, response, data) {
@@ -53,6 +55,7 @@ function geocodeCity(cityName, callback) {
 // Get the index (takes a query string /?city=Amsterdam)
 app.get('/', function(req, res){
   var initialCity = req.query.city;
+  if (!initialCity || initialCity === null){ initialCity = "London"; }
   geocodeCity(initialCity, function(lat, lng, combinedLatLon){
     res.render('index', {title: "SendGrid Parse API Demo", latlon: combinedLatLon});
   });
