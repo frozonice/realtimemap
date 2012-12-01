@@ -11,17 +11,23 @@ var express = require('express')
 
 
 // Define the Pusher stuff
+//var pusher = new Pusher({
+//  appId: '32663',
+//  key: 'fe8078e2b4e8602b039e',
+//  secret: '2f5af1b8dc6d310a575b'
+//});
+
 var pusher = new Pusher({
-  appId: '32663',
-  key: 'fe8078e2b4e8602b039e',
-  secret: '2f5af1b8dc6d310a575b'
+  appId: process.env["PUSHER_APP_ID"],
+  key: process.env["PUSHER_APP_KEY"],
+  secret: process.env["PUSHER_APP_SECRET"]
 });
 
 var channel = 'map';
 
 // Define the SendGrid stuff
-
-var sendgrid = new SendGrid('martyndavies', 'md9482');
+var sendgrid = new SendGrid(process.env["SENDGRID_USERNAME"], process.env["SENDGRID_PASSWORD"]);
+//var sendgrid = new SendGrid('martyndavies', 'md9482');
 
 // Define the app stuff
 var app = express();
