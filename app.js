@@ -7,7 +7,7 @@ var express = require('express')
   , md5 = require('MD5')
   , SendGrid = require('sendgrid').SendGrid
   , count = 0
-  , target = 20;
+  , target = 4;
 
 var pusher = new Pusher({
   appId: process.env["PUSHER_APP_ID"],
