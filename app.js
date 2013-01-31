@@ -7,7 +7,8 @@ var express = require('express')
   , md5 = require('MD5')
   , SendGrid = require('sendgrid').SendGrid
   , count = 0
-  , target = 10;
+  , target = 10,
+  , isAcceptingMessages = false;
 
 var pusher = new Pusher({
   appId: process.env["PUSHER_APP_ID"],
@@ -81,7 +82,11 @@ app.get('/', function(req, res){
 
 // Receive events
 app.post('/receiver', function(req, res){
-  count++;
+  if (isAcceptingMessages === false){
+    count = 0;
+  } else {
+    count++;
+  }
   // Hash the email address
   var email_address = req.body.from.replace(/</g,'').replace(/>/g,'').split(' ');
   var sender_name = email_address[0]+" "+email_address[1];
@@ -95,7 +100,8 @@ app.post('/receiver', function(req, res){
       name: sender_name,
       email: hashed_email_address,
       lat: lat,
-      lng: lng
+      lng: lng,
+      messagesOn: isAcceptingMessages
     };
 
     // push to the browser!
