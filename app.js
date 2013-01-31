@@ -43,9 +43,9 @@ function emailWinner(emailAddress, name){
 
   sendgrid.send({
     to: emailAddress,
-    from: 'community@sendgrid.com',
+    from: 'martyn.davies@sendgrid.com',
     subject: 'You are the winner!',
-    text: 'Hey '+name+', you were the 20th email received! Congrats, see Martyn for your prize.'
+    text: 'Hey '+name+', you were the 10th email received! Congrats, see Martyn for your prize.'
   }, function(success, message) {
       if (!success) {
       console.log(message);
