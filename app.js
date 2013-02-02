@@ -7,8 +7,8 @@ var express = require('express')
   , md5 = require('MD5')
   , SendGrid = require('sendgrid').SendGrid
   , count = 0
-  , target = 10,
-  , isAcceptingMessages = false;
+  , target = 30,
+  , isAcceptingMessages = true;
 
 var pusher = new Pusher({
   appId: process.env["PUSHER_APP_ID"],
@@ -45,8 +45,8 @@ function emailWinner(emailAddress, name){
   sendgrid.send({
     to: emailAddress,
     from: 'martyn.davies@sendgrid.com',
-    subject: 'You are the winner!',
-    text: 'Hey '+name+', you were the 10th email received! Congrats, see Martyn for your prize.'
+    subject: 'Boom! You are the winner!',
+    text: 'Hey '+name+', you were the 30th email received! Congrats, reply to this email with your home/work address and Martyn will get your prize sent out ASAP!'
   }, function(success, message) {
       if (!success) {
       console.log(message);
