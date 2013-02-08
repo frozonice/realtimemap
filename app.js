@@ -73,7 +73,7 @@ function geocodeCity(cityName, callback) {
 // Get the index (takes a query string /?city=Amsterdam)
 app.get('/', function(req, res){
   var initialCity = req.query.city;
-  if (!initialCity || initialCity === null){ initialCity = "Amsterdam"; }
+  if (!initialCity || initialCity === null){ initialCity = "Bangalore"; }
   geocodeCity(initialCity, function(lat, lng, combinedLatLon){
     res.render('index', {title: "SendGrid Parse API Demo", latlon: combinedLatLon});
   });
