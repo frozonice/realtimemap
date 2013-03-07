@@ -1,14 +1,14 @@
-var express = require('express')
-  , http = require('http')
-  , path = require('path')
-  , Pusher = require('node-pusher')
-  , request = require('request')
-  , util = require('util')
-  , md5 = require('MD5')
-  , SendGrid = require('sendgrid').SendGrid
-  , count = 0
-  , target = 30
-  , isAcceptingMessages = true;
+var express = require('express'),
+    http = require('http'),
+    path = require('path'),
+    Pusher = require('node-pusher'),
+    request = require('request'),
+    util = require('util'),
+    md5 = require('MD5'),
+    SendGrid = require('sendgrid').SendGrid,
+    count = 0,
+    target = 4,
+    isAcceptingMessages = true;
 
 var pusher = new Pusher({
   appId: process.env["PUSHER_APP_ID"],
@@ -46,7 +46,7 @@ function emailWinner(emailAddress, name){
     to: emailAddress,
     from: 'martyn.davies@sendgrid.com',
     subject: 'Boom! You are the winner!',
-    text: 'Hey '+name+', you were the 30th email received! Congratulations, you win! See Martyn and he will give you your prize.'
+    text: 'Hey '+name+', you were the 4th email received! Congratulations, you win! See Martyn and he will give you your prize.'
   }, function(success, message) {
       if (!success) {
       console.log(message);
@@ -73,7 +73,7 @@ function geocodeCity(cityName, callback) {
 // Get the index (takes a query string /?city=Amsterdam)
 app.get('/', function(req, res){
   var initialCity = req.query.city;
-  if (!initialCity || initialCity === null){ initialCity = "Bangalore"; }
+  if (!initialCity || initialCity === null){ initialCity = "Austin"; }
   geocodeCity(initialCity, function(lat, lng, combinedLatLon){
     res.render('index', {title: "SendGrid Parse API Demo", latlon: combinedLatLon});
   });
