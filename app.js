@@ -8,7 +8,7 @@ var express = require('express'),
     SendGrid = require('sendgrid').SendGrid,
     count = 0,
     target = 25,
-    isAcceptingMessages = true;
+    isAcceptingMessages = process.env.isAcceptingMessages;
 
 var pusher = new Pusher({
   appId: process.env['PUSHER_APP_ID'],
